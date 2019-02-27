@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20
+      author: hauschildt
+      changes:
+      - createTable:
+          columns:
+          - column:
+              name: id
+              type: uuid
+              constraints:
+                primaryKey: true
+                nullable: false
+          - column:
+              name: user_id
+              type: uuid
+          - column:
+              name: goal_id
+              type: uuid
+          - column:
+              name: value
+              type: bigint
+          - column:
+              name: comparing_value
+              type: bigint
+          - column:
+              name: date
+              type: date
+          schemaName: public
+          tableName: measurement
+      - addForeignKeyConstraint:
+          baseColumnNames: goal_id
+          baseTableName: measurement
+          constraintName: fk_measurement_goal
+          deferrable: false
+          initiallyDeferred: false
+          referencedColumnNames: id
+          referencedTableName: goal

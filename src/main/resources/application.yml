@@ -1,0 +1,46 @@
+server:
+  port: 7850
+  session:
+    cookie:
+      name: UISESSION
+security:
+  require-ssl: true
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      clientId: freyaFitnessWebApp
+      clientSecret: secret
+      accessTokenUri: https://localhost:9443/oauth/token
+      userAuthorizationUri: https://localhost:9443/oauth/authorize
+    resource:
+      userInfoUri: https://localhost:9443/user/me
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+  datasource:
+    driverClassName: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        temp:
+          # Disable feature detection by this undocumented parameter.
+          # Check the org.hibernate.engine.jdbc.internal.JdbcServiceImpl.configure method for more details.
+          use_jdbc_metadata_defaults: false
+    # Because detection is disabled you have to set correct dialect by hand.
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+clients:
+  preferences:
+    user: ${PREFERENCES_USR}
+    password: ${PREFERENCES_PSW}
+    name: Preferences
+    url: ${PREFERENCES_URL}
